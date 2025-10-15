@@ -1,7 +1,20 @@
+/*
+  file: logo.dart
+  functionality:
+    A reusable widget that draws a circular Tic Tac Toe frame.
+    Uses Flutter’s CustomPainter to render a minimalistic design containing a 3×3 grid with an “X” in the 
+    top-left cell and an “O” in the bottom-right.
+    The size of the logo is customizable via the [size] parameter.
+  author: Hettiarachchige Mary Shenara Amodini DE SILVA (10686404)
+  date created: 20/09/2025
+*/
+
 import 'package:flutter/material.dart';
 
+// A stateless widget that renders a circular Tic Tac Toe logo.
 class TicTacToeLogo extends StatelessWidget {
   final double size;
+  // Creates a Tic Tac Toe logo with a configurable [size].
   const TicTacToeLogo({super.key, this.size = 150});
 
   @override
@@ -10,6 +23,7 @@ class TicTacToeLogo extends StatelessWidget {
   }
 }
 
+// Custom painter responsible for drawing the Tic Tac Toe logo.
 class _TicTacToePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {

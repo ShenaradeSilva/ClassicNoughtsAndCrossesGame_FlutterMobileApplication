@@ -1,3 +1,18 @@
+/*
+  file: stats_view.dart
+  functionality:
+    This file defines the ResultsScreen widget for the Tic Tac Toe game.
+    It displays the outcome of the last game, including the winner, player and AI profiles, and statistics such as wins, losses, and draws.
+    The screen uses StatsViewModel for retrieving game data and Provider for state management.
+    Includes:
+      - Shows a congratulatory or game-over card based on the last result
+    - Displays player and AI profile images
+    - Displays statistics of wins, losses, and draws
+    - Provides a button to return to the main game
+  author: Hettiarachchige Mary Shenara Amodini DE SILVA (10686404)
+  date created: 30/09/2025
+*/
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../view_model/stats_view_model.dart';
@@ -6,6 +21,7 @@ import '../model/player_model.dart';
 class ResultsScreen extends StatelessWidget {
   const ResultsScreen({super.key});
 
+  // Returns a CircleAvatar with the appropriate image for the given profile.
   Widget _profileImage(PlayerProfile? profile, double size) {
     if (profile == null) {
       return CircleAvatar(
@@ -34,6 +50,7 @@ class ResultsScreen extends StatelessWidget {
     );
   }
 
+  // Builds a row displaying a single statistic (wins, losses, draws) for both player and AI.
   Widget _buildStatRow(String stat, int playerValue, int aiValue) {
     return Row(
       children: [
@@ -67,12 +84,15 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Access the StatsViewModel for game statistics and last result
     final statsVM = Provider.of<StatsViewModel>(context);
 
+    // Compute AI statistics (inverse of player stats)
     final aiWins = statsVM.losses;
     final aiLosses = statsVM.wins;
     final aiDraws = statsVM.draws;
 
+    // Determine winner information and display card settings
     String winnerName;
     PlayerProfile? winnerProfile;
     String cardMessage;
@@ -80,6 +100,7 @@ class ResultsScreen extends StatelessWidget {
     bool isDraw = false;
 
     if (statsVM.lastResult == true) {
+      // Player won
       winnerName = statsVM.lastUserName.isNotEmpty
           ? statsVM.lastUserName
           : 'You';
@@ -87,11 +108,13 @@ class ResultsScreen extends StatelessWidget {
       cardColor = Colors.pink;
       cardMessage = "CONGRATULATIONS!!";
     } else if (statsVM.lastResult == false) {
+      // AI won         
       winnerName = statsVM.lastAIName.isNotEmpty ? statsVM.lastAIName : 'AI';
       winnerProfile = statsVM.lastAIProfile ?? PlayerProfile.ai;
       cardColor = Colors.cyan;
       cardMessage = "GAME OVER!!";
     } else {
+      // Draw
       winnerName = 'Drawn';
       winnerProfile = null;
       cardColor = Colors.purple.shade200;
@@ -104,6 +127,7 @@ class ResultsScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
+            // Header bar with back button
             Container(
               color: Colors.purple[700],
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
@@ -115,7 +139,7 @@ class ResultsScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   const Text(
-                    'Tic Tac Toe Game',
+                    'Game Results',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -126,17 +150,9 @@ class ResultsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 16),
-            const Text(
-              "Game Results",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
             const SizedBox(height: 24),
 
+            // Result card showing winner or draw
             Container(
               width: 260,
               height: 260,
@@ -159,6 +175,7 @@ class ResultsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   if (isDraw)
+                    // Show both profiles for a draw
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -171,6 +188,7 @@ class ResultsScreen extends StatelessWidget {
                       ],
                     )
                   else
+                    // Show only winner profile
                     _profileImage(winnerProfile, 72),
                   const SizedBox(height: 12),
                   Text(
@@ -197,8 +215,9 @@ class ResultsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
+            // Statistics panel
             Container(
-              width: double.infinity,
+              width: 450,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: Colors.purple[700],
@@ -206,6 +225,7 @@ class ResultsScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
+                  // Profile row
                   Row(
                     children: [
                       const Expanded(child: SizedBox()),
@@ -250,6 +270,7 @@ class ResultsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  // Stats rows
                   const SizedBox(height: 12),
                   _buildStatRow('Wins', statsVM.wins, aiWins),
                   const SizedBox(height: 8),

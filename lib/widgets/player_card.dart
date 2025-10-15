@@ -1,20 +1,37 @@
+/*
+  file: player_card.dart
+  functionality:
+    A reusable widget that displays a player’s information card, including their name, avatar (based on gender profile), 
+    and optional symbol (X or O).
+    The layout dynamically adjusts for small or regular display sizes.
+    Features:
+      - Displays male/female image assets or default icon if no profile.
+      - Optionally shows the player's symbol (X or O).
+      - Uses Flutter’s modern layout practices (const constructors, spread operator).
+  author: Hettiarachchige Mary Shenara Amodini DE SILVA (10686404)
+  date created: 20/09/2025
+*/
+
 import 'package:flutter/material.dart';
 import '../model/player_model.dart';
 
+// A customizable card widget used to display player information such as name, profile image, and symbol (X or O).
 class PlayerCard extends StatelessWidget {
-  final String name;
-  final PlayerProfile? profile;
-  final bool isSmall;
-  final Player? symbol; // Nullable symbol
+  final String name;              // Player's display name
+  final PlayerProfile? profile;   // Male/Female/AI profile
+  final bool isSmall;             // Controls compact layout size
+  final Player? symbol;           // Optional symbol display (X or O)
 
   const PlayerCard({
     super.key, 
     required this.name, 
     required this.profile,
     this.isSmall = false,
-    this.symbol, // optional
+    this.symbol, 
   });
 
+  // Builds the player card with profile image, name, and symbol if provided.
+  // The layout adjusts based on [isSmall] for flexibility in different screens.
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,3 +1,21 @@
+/*
+  file: homepage_view.dart
+  functionality:
+    This file defines the HomepageView for the Tic Tac Toe game. 
+    It provides the user interface for starting a new game, selecting player profile, choosing difficulty, 
+    and selecting a symbol (X or O). 
+    It leverages the Provider package for state management via HomepageViewModel and navigates to 
+    GameView upon starting the game.
+    Includes:
+      - Input player name
+      - Select player profile (male, female, none)
+      - Choose difficulty (easy, medium, hard)
+      - Select player symbol (X/O)
+      - Navigate to GameView with configured game settings
+  author: Hettiarachchige Mary Shenara Amodini DE SILVA (10686404)
+  date created: 20/09/2025
+*/
+
 import 'package:classic_noughts_and_crosses_game/view_model/game_view_model.dart';
 import 'package:classic_noughts_and_crosses_game/widgets/instructions.dart';
 import 'package:flutter/material.dart';
@@ -16,18 +34,20 @@ class HomepageView extends StatefulWidget {
 }
 
 class _HomepageViewState extends State<HomepageView> {
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();    // Controller for the player's name input field
 
   @override
   void initState() {
     super.initState();
-    _nameController.addListener(_onNameChanged);
+    _nameController.addListener(_onNameChanged);      // Listen to changes in the name field and update the ViewModel
   }
 
+  // Updates the player's name in the HomepageViewModel
   void _onNameChanged() {
     context.read<HomepageViewModel>().setPlayerName(_nameController.text);
   }
 
+  // Shows the profile selection modal bottom sheet
   void _selectProfileCard(BuildContext context) {
     final viewModel = context.read<HomepageViewModel>();
 
@@ -43,7 +63,7 @@ class _HomepageViewState extends State<HomepageView> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // None option
+            // None option for no profile selection
             GestureDetector(
               onTap: () {
                 viewModel.setSelectedProfile(null);
@@ -63,15 +83,22 @@ class _HomepageViewState extends State<HomepageView> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: const [
-                    Icon(Icons.clear, color: Colors.white, size: 50),
+                    Icon(
+                      Icons.clear, 
+                      color: Colors.white, 
+                      size: 50
+                    ),
                     SizedBox(height: 8),
-                    Text('None', style: TextStyle(color: Colors.white)),
+                    Text(
+                      'None', 
+                      style: TextStyle(color: Colors.white)
+                    ),
                   ],
                 ),
               ),
             ),
 
-            // Profile options (exclude AI)
+            // Dynamic list of profiles (male/female)
             ...PlayerProfile.values
                 .where((p) => p != PlayerProfile.ai)
                 .map((profile) {
@@ -116,6 +143,7 @@ class _HomepageViewState extends State<HomepageView> {
     );
   }
 
+  // Displays a dialog for the user to choose X or O
   Future<void> _showSymbolSelectionDialog(BuildContext context) async {
     final viewModel = context.read<HomepageViewModel>();
 
@@ -165,12 +193,14 @@ class _HomepageViewState extends State<HomepageView> {
       ),
     );
 
+    // If a symbol is chosen, update ViewModel and navigate to game
     if (chosenSymbol != null) {
       viewModel.setChosenSymbol(chosenSymbol);
       _navigateToGame(context);
     }
   }
 
+  // Navigates to GameView with the selected game configuration
   void _navigateToGame(BuildContext context) {
     final viewModel = context.read<HomepageViewModel>();
     final config = viewModel.getGameConfig();
@@ -205,7 +235,10 @@ class _HomepageViewState extends State<HomepageView> {
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   leading: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(
+                      Icons.arrow_back, 
+                      color: Colors.white
+                    ),
                     onPressed: () {
                       viewModel.resetForm();
                       _nameController.clear();
@@ -213,7 +246,10 @@ class _HomepageViewState extends State<HomepageView> {
                   ),
                   actions: [
                     IconButton(
-                      icon: const Icon(Icons.info_outline, color: Colors.white),
+                      icon: const Icon(
+                        Icons.info_outline, 
+                        color: Colors.white
+                      ),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -242,6 +278,7 @@ class _HomepageViewState extends State<HomepageView> {
                   const TicTacToeLogo(),
                   const SizedBox(height: 40),
 
+                  // Show initial buttons if not in setup mode
                   if (!viewModel.showGameSetup) ...[
                     ElevatedButton(
                       onPressed: () => viewModel.setShowGameSetup(true),
@@ -289,6 +326,7 @@ class _HomepageViewState extends State<HomepageView> {
                     ),
                   ],
 
+                  // Game setup UI
                   if (viewModel.showGameSetup) ...[
                     ProfileCardField(
                       nameController: _nameController,
@@ -299,6 +337,7 @@ class _HomepageViewState extends State<HomepageView> {
                     ),
                     const SizedBox(height: 10),
 
+                    // Difficulty selection dropdown
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: DropdownButtonFormField<String>(
@@ -317,10 +356,18 @@ class _HomepageViewState extends State<HomepageView> {
                           ),
                         ),
                         items: const [
-                          DropdownMenuItem(value: 'easy', child: Text('Easy')),
                           DropdownMenuItem(
-                              value: 'medium', child: Text('Medium')),
-                          DropdownMenuItem(value: 'hard', child: Text('Hard')),
+                            value: 'easy', 
+                            child: Text('Easy')
+                          ),
+                          DropdownMenuItem(
+                            value: 'medium', 
+                            child: Text('Medium')
+                          ),
+                          DropdownMenuItem(
+                            value: 'hard', 
+                            child: Text('Hard')
+                          ),
                         ],
                         onChanged: (value) =>
                             viewModel.setSelectedDifficulty(value),
@@ -334,6 +381,7 @@ class _HomepageViewState extends State<HomepageView> {
                     ),
                     const SizedBox(height: 20),
 
+                    // Start game button
                     ElevatedButton(
                       onPressed: () {
                         if (!viewModel.isFormValid) {

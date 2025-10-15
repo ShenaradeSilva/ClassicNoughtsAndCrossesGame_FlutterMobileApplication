@@ -1,5 +1,16 @@
+/*
+  file: instructions.dart
+  functionality:
+    Provides step-by-step instructions explaining gameplay rules and options such as difficulty levels and symbol selection.
+    The layout uses Flutter’s Material widgets for consistency and includes a custom-styled AppBar and scrollable text content 
+    for readability.
+  author: Hettiarachchige Mary Shenara Amodini DE SILVA (10686404)
+  date created: 01/10/2025
+*/
+
 import 'package:flutter/material.dart';
 
+// A simple static view that explains how to play the Tic Tac Toe game.
 class InstructionsView extends StatelessWidget {
   const InstructionsView({super.key});
 
@@ -7,9 +18,10 @@ class InstructionsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
+      // AppBar with centered title and custom back button
       appBar: AppBar(
         backgroundColor: Colors.purple[700],
-        automaticallyImplyLeading: false, // disable default back button
+        automaticallyImplyLeading: false,         // disable default back button
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
@@ -18,9 +30,10 @@ class InstructionsView extends StatelessWidget {
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pop(context),      // Go back to previous screen
         ),
       ),
+      // Scrollable body with step-by-step instructions
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
@@ -42,6 +55,7 @@ class InstructionsView extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 40),
+              // Closing note
               Center(
                 child: Text(
                   "Good Luck & Have Fun!",

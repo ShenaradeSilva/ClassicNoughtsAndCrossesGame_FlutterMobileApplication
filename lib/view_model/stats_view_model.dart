@@ -1,3 +1,13 @@
+/*
+  file: stats_view_model.dart
+  functionality:
+    Tracks and persists wins, losses, and draws per player.
+    Maintains the last game information for display on ResultsScreen.
+    Provides methods to update stats after a game and reset stats.
+  author: Hettiarachchige Mary Shenara Amodini DE SILVA (10686404)
+  date created: 30/09/2025
+*/
+
 import 'package:flutter/material.dart';
 import '../model/stats_model.dart';
 import '../model/player_model.dart';
@@ -39,6 +49,7 @@ class StatsViewModel extends ChangeNotifier {
     }
   }
 
+  // Returns existing stats for user or creates default
   StatsModel _getOrCreateStats(String userName) {
     if (!_allStats.containsKey(userName)) {
       _allStats[userName] = StatsModel(wins: 0, losses: 0, draws: 0);
@@ -57,7 +68,7 @@ class StatsViewModel extends ChangeNotifier {
 
     final stats = _getOrCreateStats(userName);
     stats.wins++;
-    await StatsModel.saveAll(_allStats);
+    await StatsModel.saveAll(_allStats);      // Persist stats
     notifyListeners();
   }
 
@@ -91,6 +102,7 @@ class StatsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Updates last game info for display
   void _setLastGame(
       String userName, PlayerProfile? profile, Player userSymbol, bool? result) {
     lastUserName = userName;

@@ -1,7 +1,23 @@
+/*
+  file: opponent_display.dart
+  functionality:
+    This widget displays the player's and opponent AI's details, including names, profile icons, and assigned symbols. 
+    It also visually indicates the current difficulty level (Easy, Medium, or Hard) through a color-coded badge at the top 
+    of the display.
+    Features:
+      - Dynamically determines and displays AI symbol opposite to the player.
+      - Shows difficulty level with contextual color (green, orange, red).
+      - Displays avatar images for male/female players and AI.
+      - Clean, layered UI using Flutter Stack and Container widgets.
+  author: Hettiarachchige Mary Shenara Amodini DE SILVA (10686404)
+  date created: 20/09/2025
+*/
+
 import 'package:flutter/material.dart';
 import '../model/player_model.dart';
 import '../model/game_model.dart';
 
+// Displays the player's and AI's information with difficulty level badge.
 class OpponentDisplay extends StatelessWidget {
   final PlayerConfig playerConfig;
   final GameDifficulty difficulty;
@@ -12,6 +28,7 @@ class OpponentDisplay extends StatelessWidget {
     required this.difficulty,
   });
 
+  // Returns difficulty level as display text.
   String _getDifficultyText() {
     switch (difficulty) {
       case GameDifficulty.easy:
@@ -23,6 +40,7 @@ class OpponentDisplay extends StatelessWidget {
     }
   }
 
+  // Returns a color theme based on difficulty.
   Color _getDifficultyColor() {
     switch (difficulty) {
       case GameDifficulty.easy:
@@ -34,10 +52,12 @@ class OpponentDisplay extends StatelessWidget {
     }
   }
 
+  // Determines which symbol (X or O) is assigned to the AI.
   Player _getAISymbol() {
     return playerConfig.symbol == Player.x ? Player.o : Player.x;
   }
 
+  // Builds the player or AI card with avatar, name, and symbol display.
   @override
   Widget build(BuildContext context) {
     final aiSymbol = _getAISymbol();
