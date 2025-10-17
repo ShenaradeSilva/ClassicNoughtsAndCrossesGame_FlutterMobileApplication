@@ -62,17 +62,17 @@ A mobile implementation of the classic Noughts & Crosses (Tic Tac Toe) game deve
 
 The app follows the **MVVM (Model-View-ViewModel)** pattern:
     lib/
-    ├── model/ # Game, Player, Stats data structures
-    ├── view/ # UI screens: Home, Game, Stats
-    ├── view_model/ # Business logic & state management
-    ├── widgets/ # Reusable UI components (cards, profile selectors)
+    ├── model/                # Game, Player, Stats data structures
+    ├── view/                 # UI screens: Home, Game, Stats
+    ├── view_model/           # Business logic & state management
+    ├── widgets/              # Reusable UI components (cards, profile selectors)
     test/
-    ├── unit_test.dart # Unit tests for game logic
+    ├── unit_test.dart        # Unit tests for game logic
     assets/
     ├── male.png
     ├── female.png
     └── ai.png
-    pubspec.yaml # Dependencies and assets
+    pubspec.yaml              # Dependencies and assets
 
 
 **Key Components:**
