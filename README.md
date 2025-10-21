@@ -141,10 +141,3 @@ All tests are passing, ensuring the game logic behaves as expected.
 
 
 ---
-
-## License
-
-This project is for academic purposes. All rights reserved by Shenara De Silva.
-
-
----
