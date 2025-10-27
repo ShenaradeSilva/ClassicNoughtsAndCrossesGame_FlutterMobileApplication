@@ -61,6 +61,7 @@ A mobile implementation of the classic Noughts & Crosses (Tic Tac Toe) game deve
 ## Architecture & Code Structure
 
 The app follows the **MVVM (Model-View-ViewModel)** pattern:
+```
     lib/
     ├── model/                # Game, Player, Stats data structures
     ├── view/                 # UI screens: Home, Game, Stats
@@ -73,7 +74,7 @@ The app follows the **MVVM (Model-View-ViewModel)** pattern:
     ├── female.png
     └── ai.png
     pubspec.yaml              # Dependencies and assets
-
+```
 
 **Key Components:**
 
@@ -110,25 +111,19 @@ The app follows the **MVVM (Model-View-ViewModel)** pattern:
 
 ## Dependencies
 
-    provider: State management for reactive UI.
-
-    shared_preferences: Persistent storage for player statistics.
-
-    flutter_test: Unit testing framework.
+- provider: State management for reactive UI.
+- shared_preferences: Persistent storage for player statistics.
+- flutter_test: Unit testing framework.
 
 ---
 
 ## Unit Testing
 
-    Unit tests verify core functionality:
-
-    Valid/invalid moves (makeMove / isValidMove)
-
-    Win/Loss/Draw detection (checkWinner)
-
-    Undo functionality (undoMove)
-
-    AI behavior (Easy, Hard)
+Unit tests verify core functionality:
+- Valid/invalid moves (makeMove / isValidMove)
+- Win/Loss/Draw detection (checkWinner)
+- Undo functionality (undoMove)
+- AI behavior (Easy, Hard)
 
 ---
 
